@@ -37,6 +37,7 @@
     "build",
     "dist",
     "examples",
-    "scripts"
+    "scripts",
+    "worker"
   ]
 }
