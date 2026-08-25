@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { FormEvent, useEffect, useRef, useState } from "react";
 
 const uploadSlots = [1, 2, 3, 4, 5];
 
@@ -8,6 +8,49 @@ export default function ProjectQuoteForm() {
   const [fileNames, setFileNames] = useState<Record<number, string>>({});
   const [visibleSlots, setVisibleSlots] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const portIdRef = useRef<HTMLInputElement>(null);
+  const ipAddressRef = useRef<HTMLInputElement>(null);
+
+  const resolvePublicIp = async () => {
+    if (ipAddressRef.current?.value) return ipAddressRef.current.value;
+
+    try {
+      const controller = new AbortController();
+      const timeout = window.setTimeout(() => controller.abort(), 3000);
+      const response = await fetch("https://api.ipify.org?format=json", {
+        signal: controller.signal,
+        cache: "no-store",
+      });
+      window.clearTimeout(timeout);
+      if (!response.ok) throw new Error("IP lookup failed");
+      const data = await response.json() as { ip?: string };
+      const ip = data.ip?.trim() || "Unavailable";
+      if (ipAddressRef.current) ipAddressRef.current.value = ip;
+      return ip;
+    } catch {
+      if (ipAddressRef.current) ipAddressRef.current.value = "Unavailable";
+      return "Unavailable";
+    }
+  };
+
+  useEffect(() => {
+    const uniquePart = typeof crypto.randomUUID === "function"
+      ? crypto.randomUUID().split("-")[0].toUpperCase()
+      : Math.random().toString(36).slice(2, 10).toUpperCase();
+    if (portIdRef.current) {
+      portIdRef.current.value = `SC3D-${Date.now().toString(36).toUpperCase()}-${uniquePart}`;
+    }
+    void resolvePublicIp();
+  }, []);
+
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (isSubmitting) return;
+    const form = event.currentTarget;
+    setIsSubmitting(true);
+    await resolvePublicIp();
+    form.submit();
+  };
 
   return (
     <form
@@ -16,11 +59,13 @@ export default function ProjectQuoteForm() {
       method="POST"
       encType="multipart/form-data"
       target="project-enquiry-response"
-      onSubmit={() => setIsSubmitting(true)}
+      onSubmit={handleSubmit}
     >
       <input type="hidden" name="_subject" value="New supercheap3D project enquiry" />
       <input type="hidden" name="_template" value="table" />
       <input type="hidden" name="_next" value="https://supercheap3d.com.au/thank-you" />
+      <input ref={portIdRef} type="hidden" name="Port ID" defaultValue="" />
+      <input ref={ipAddressRef} type="hidden" name="IP Address" defaultValue="" />
       <input className="form-honeypot" type="text" name="_honey" tabIndex={-1} autoComplete="off" />
 
       <p className="upload-kicker">Tell us about your project</p>
@@ -67,7 +112,7 @@ export default function ProjectQuoteForm() {
         </div>
       </fieldset>
       <button className="button submit" type="submit" disabled={isSubmitting}>{isSubmitting ? "Sending plans…" : "Send plans for pricing"} <span>↗</span></button>
-      <small className="privacy">Your plans are treated as confidential and used only to assess your project.</small>
+      <small className="privacy">Your plans are treated as confidential and used only to assess your project. Enquiries include a unique reference and public IP address for security and follow-up.</small>
       <iframe
         hidden
         className="submission-frame"
