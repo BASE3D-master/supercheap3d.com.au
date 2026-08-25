@@ -5,6 +5,31 @@ import { FormEvent, useState } from "react";
 const uploadSlots = [1, 2, 3, 4, 5];
 const maxCombinedUploadBytes = 25 * 1024 * 1024;
 
+function createPortId() {
+  const uniquePart = typeof crypto.randomUUID === "function"
+    ? crypto.randomUUID().split("-")[0].toUpperCase()
+    : Math.random().toString(36).slice(2, 10).toUpperCase();
+  return `SC3D-${Date.now().toString(36).toUpperCase()}-${uniquePart}`;
+}
+
+async function resolvePublicIp() {
+  const controller = new AbortController();
+  const timeout = window.setTimeout(() => controller.abort(), 4000);
+  try {
+    const response = await fetch("https://api.ipify.org?format=json", {
+      signal: controller.signal,
+      cache: "no-store",
+    });
+    if (!response.ok) throw new Error("IP lookup failed");
+    const data = await response.json() as { ip?: string };
+    return data.ip?.trim() || "Unavailable";
+  } catch {
+    return "Unavailable — recorded in Forminit submission metadata";
+  } finally {
+    window.clearTimeout(timeout);
+  }
+}
+
 export default function ProjectQuoteForm() {
   const [fileNames, setFileNames] = useState<Record<number, string>>({});
   const [visibleSlots, setVisibleSlots] = useState(1);
@@ -27,10 +52,13 @@ export default function ProjectQuoteForm() {
     setSubmissionError("");
     setIsSubmitting(true);
     try {
+      const formData = new FormData(form);
+      formData.append("fi-text-portId", createPortId());
+      formData.append("fi-text-ipAddress", await resolvePublicIp());
       const response = await fetch("https://forminit.com/f/y5ewa2cnm5i", {
         method: "POST",
         headers: { Accept: "application/json" },
-        body: new FormData(form),
+        body: formData,
       });
       const result = await response.json().catch(() => null) as {
         error?: { message?: string } | string;
@@ -102,7 +130,7 @@ export default function ProjectQuoteForm() {
       </fieldset>
       {submissionError && <p className="form-error" role="alert">{submissionError}</p>}
       <button className="button submit" type="submit" disabled={isSubmitting}>{isSubmitting ? "Sending plans…" : "Send plans for pricing"} <span>↗</span></button>
-      <small className="privacy">Your plans are treated as confidential and used only to assess your project. Each enquiry is recorded with a unique submission reference and IP address for security and follow-up.</small>
+      <small className="privacy">Your plans ar treated as confidential and used only to assess your project. Each enquiry is recorded with a unique submission reference and IP address for security and follow-up.</small>
     </form>
   );
 }
