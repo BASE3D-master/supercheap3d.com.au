@@ -7,6 +7,10 @@ const serif = Cormorant_Garamond({ variable: "--font-serif", subsets: ["latin"],
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://supercheap3d.com.au"),
+  icons: {
+    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
+    shortcut: "/favicon.svg",
+  },
   title: { default: "supercheap3D Architectural Visualisation Australia", template: "%s | supercheap3D" },
   description: "Photorealistic 3D rendering and architectural visualisation for Australian builders, architects and property developers. Upload plans for project pricing.",
   keywords: ["3D rendering services Australia", "architectural visualisation Australia", "architectural rendering", "property development renders", "3D house rendering", "commercial 3D rendering"],
