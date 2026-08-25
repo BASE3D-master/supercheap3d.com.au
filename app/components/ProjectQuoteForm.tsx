@@ -12,7 +12,7 @@ export default function ProjectQuoteForm() {
   return (
     <form
       className="quote-form upload-card project-enquiry-form"
-      action="https://formsubmit.co/super3dau@supercheap3d.com.au"
+      action="https://formsubmit.co/studio3d@supercheap3d.com.au"
       method="POST"
       encType="multipart/form-data"
       target="project-enquiry-response"
