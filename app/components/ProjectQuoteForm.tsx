@@ -29,11 +29,18 @@ export default function ProjectQuoteForm() {
     try {
       const response = await fetch("https://forminit.com/f/y5ewa2cnm5i", {
         method: "POST",
+        headers: { Accept: "application/json" },
         body: new FormData(form),
       });
-      const result = await response.json().catch(() => null) as { error?: { message?: string } } | null;
+      const result = await response.json().catch(() => null) as {
+        error?: { message?: string } | string;
+        message?: string;
+      } | null;
       if (!response.ok || result?.error) {
-        throw new Error(result?.error?.message || "We couldn't send your enquiry. Please try again.");
+        const errorMessage = typeof result?.error === "string"
+          ? result.error
+          : result?.error?.message || result?.message;
+        throw new Error(errorMessage || "We couldn't send your enquiry. Please try again.");
       }
       window.location.assign("/thank-you");
     } catch (error) {
@@ -61,7 +68,7 @@ export default function ProjectQuoteForm() {
         </label>
       </div>
       <label>Mobile
-        <input name="fi-sender-phone" type="tel" autoComplete="tel" inputMode="tel" required />
+        <input name="fi-text-mobile" type="tel" autoComplete="tel" inputMode="tel" required />
       </label>
       <label>3D required
         <textarea name="fi-text-projectRequirements" rows={4} placeholder="Tell us what you need visualised in a sentence or two." required />
