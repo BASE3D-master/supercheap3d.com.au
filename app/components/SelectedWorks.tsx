@@ -137,6 +137,7 @@ const retailHospitalityProjects: readonly PortfolioProject[] = [
 
 export const servicePortfolioProjects: Readonly<Record<string, readonly PortfolioProject[]>> = {
   "residential-3d-rendering": residentialProjects,
+  "facade-renders": facadeProjects,
   "commercial-3d-rendering": commercialProjects,
   "photomontage-rendering": photomontageProjects,
   "marketing-floor-plans": marketingFloorPlanProjects,

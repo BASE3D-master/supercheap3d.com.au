@@ -10,7 +10,7 @@ const services = [
 ];
 
 const renderTypes = [
-  ["Facade renders", "Builder-ready home elevations with materials, landscaping and presentation lighting.", "/services/residential-3d-rendering"],
+  ["Facade renders", "Builder-ready home elevations with materials, landscaping and presentation lighting.", "/services/facade-renders"],
   ["Streetscape renders", "Multi-residential street scenes that communicate scale, repetition and neighbourhood character.", "/services/streetscape-renders"],
   ["Living · kitchen · dining", "Open-plan interiors with detailed joinery, furniture, fixtures and material selections.", "/services/living-kitchen-dining-renders"],
   ["Alfresco & backyard", "Indoor-outdoor living, pools, landscape and entertaining spaces shown as one experience.", "/services/alfresco-backyard-renders"],
@@ -63,7 +63,7 @@ export default function Home() {
         <nav aria-label="Main navigation">
           <a href="#work">Portfolio</a><a href="#services">Services</a><a href="#process">Process</a><a href="#about">Why us</a>
         </nav>
-        <a className="nav-cta" href="#quote">Upload plans <span>↗</span></a>
+        <a className="nav-cta" href="#quote">Upload plans <span className="designer-arrow" aria-hidden="true" /></a>
       </header>
 
       <section className="hero" id="top">
@@ -73,7 +73,7 @@ export default function Home() {
           <p className="eyebrow light">Architectural visualisation studio · Australia wide</p>
           <h1>See the project.<br /><em>Before it exists.</em></h1>
           <p className="hero-copy">Photorealistic 3D renders for builders, architects and property developers—crafted for approvals, presentations and sales.</p>
-          <div className="hero-actions"><a className="button primary" href="#quote">Upload plans for pricing <span>↗</span></a><a className="text-link light" href="#work">View selected work <span>↓</span></a></div>
+          <div className="hero-actions"><a className="button primary" href="#quote">Upload plans for pricing <span className="designer-arrow" aria-hidden="true" /></a><a className="text-link light" href="#work">View selected work <span>↓</span></a></div>
         </div>
         <div className="hero-proof"><div><strong>Since 2007</strong><span>Australian visualisation studio</span></div><div><strong>5-day</strong><span>Typical first proof*</span></div><div><strong>2 rounds</strong><span>Revisions included*</span></div></div>
       </section>
@@ -87,7 +87,7 @@ export default function Home() {
 
       <section className="services section" id="services">
         <div className="section-head inverse"><div><p className="eyebrow light">What we visualise</p><h2>One studio.<br /><em>Every angle.</em></h2></div><p>From a single facade to a multi-stage development campaign, our team scales to suit your brief.</p></div>
-        <div className="service-list">{services.map(([n, title, copy, href]) => <a className="service-row" href={href} key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p><b>↗</b></a>)}</div>
+        <div className="service-list">{services.map(([n, title, copy, href]) => <a className="service-row" href={href} key={n}><span>{n}</span><h3>{title}</h3><p>{copy}</p><b><span className="designer-arrow" aria-hidden="true" /></b></a>)}</div>
       </section>
 
       <section className="format-showcase section" aria-labelledby="visual-formats-title">
@@ -101,7 +101,7 @@ export default function Home() {
 
       <section className="render-library section" aria-labelledby="render-library-title">
         <div className="library-intro"><p className="eyebrow light">3D content library</p><h2 id="render-library-title">From one room<br/>to a <em>whole precinct.</em></h2><p>supercheap3D produces specialist architectural content for every stage of residential and commercial property—from design development and council communication to investor presentations and off-the-plan sales.</p></div>
-        <div className="library-grid">{renderTypes.map(([title,copy,href],i)=><a href={href} key={title}><span>{String(i+1).padStart(2,"0")}</span><h3>{title}</h3><p>{copy}</p><b>Explore ↗</b></a>)}</div>
+        <div className="library-grid">{renderTypes.map(([title,copy,href],i)=><a href={href} key={title}><span>{String(i+1).padStart(2,"0")}</span><h3>{title}</h3><p>{copy}</p><b>Explore <span className="designer-arrow" aria-hidden="true" /></b></a>)}</div>
       </section>
 
       <section className="proof-band" aria-label="supercheap3D production details"><div><strong>4000 - 20000 px</strong><span>Standard to Ultra High resolution</span></div><div><strong>4 - 7 days</strong><span>Typical still-render turnaround*</span></div><div><strong>6 - 15 days</strong><span>Typical animation delivery*</span></div><div><strong>Australia wide</strong><span>Remote project collaboration</span></div></section>
