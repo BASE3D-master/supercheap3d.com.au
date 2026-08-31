@@ -8,8 +8,11 @@ const serif = Cormorant_Garamond({ variable: "--font-serif", subsets: ["latin"],
 export const metadata: Metadata = {
   metadataBase: new URL("https://supercheap3d.com.au"),
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg",
+    icon: [
+      { url: "/favicon-96x96.png", type: "image/png", sizes: "96x96" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    shortcut: "/favicon-96x96.png",
   },
   title: { default: "supercheap3D Architectural Visualisation Australia", template: "%s | supercheap3D" },
   description: "Photorealistic 3D rendering and architectural visualisation for Australian builders, architects and property developers. Upload plans for project pricing.",
