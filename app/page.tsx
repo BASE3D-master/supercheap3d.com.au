@@ -75,7 +75,7 @@ export default function Home() {
           <p className="hero-copy">Photorealistic 3D renders for builders, architects and property developers—crafted for approvals, presentations and sales.</p>
           <div className="hero-actions"><a className="button primary" href="#quote">Upload plans for pricing <span className="designer-arrow" aria-hidden="true" /></a><a className="text-link light" href="#work">View selected work <span>↓</span></a></div>
         </div>
-        <div className="hero-proof"><div><strong>Since 2007</strong><span>Australian visualisation studio</span></div><div><strong>5-day</strong><span>Typical first proof*</span></div><div><strong>2 rounds</strong><span>Revisions included*</span></div></div>
+        <div className="hero-proof"><div><strong>Since 2008</strong><span>Australian visualisation studio</span></div><div><strong>5-day</strong><span>Typical first proof*</span></div><div><strong>2 rounds</strong><span>Revisions included*</span></div></div>
       </section>
 
       <section className="intro section" id="about">
